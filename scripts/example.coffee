@@ -1,4 +1,4 @@
 module.exports = (robot) ->
 
-  robot.hear /gremio/, (res) ->
-    res.send "Até a pé nós iremos!"
+  robot.hear /(G|g)r(ê|e)mio/, (res) ->
+    res.send "Aaaaaté a pé nós iremooos!"
