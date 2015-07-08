@@ -19,11 +19,25 @@ task :setup => :environment do
   queue! %[#{echo_cmd %{ssh-keyscan -H github.com > ~/.ssh/known_hosts}}]
 end
 
+desc 'npm: install and update dependencies'
+task :npm => :environment do
+  queue! %[#{echo_cmd %{npm install}}]
+  queue! %[#{echo_cmd %{npm update}}]
+end
+
+desc 'Restart Hubot'
+task :restart => :environment do
+  queue! %[#{echo_cmd %{restart hubot}}]
+end
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
   deploy do
     invoke :'git:clone'
-    queue! %[#{echo_cmd %{npm install}}]
-    queue! %[#{echo_cmd %{npm update}}]
+    invoke :npm
+
+    to :launch do
+      invoke :restart
+    end
   end
 end
