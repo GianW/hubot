@@ -23,5 +23,7 @@ desc "Deploys the current version to the server."
 task :deploy => :environment do
   deploy do
     invoke :'git:clone'
+    queue! %[#{echo_cmd %{npm install}}]
+    queue! %[#{echo_cmd %{npm update}}]
   end
 end
