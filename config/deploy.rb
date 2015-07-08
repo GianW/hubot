@@ -27,7 +27,7 @@ end
 
 desc 'Restart Hubot'
 task :restart => :environment do
-  queue! %[#{echo_cmd %{restart hubot}}]
+  queue! 'kill -KILL `cat $HOME/app/shared/node.pid`'
 end
 
 desc "Deploys the current version to the server."
